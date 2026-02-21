@@ -60,7 +60,3 @@ Integration tests hit the colon-style paths (`transactions:parse`, `transactions
 
 - `src/main/java/com/blackrock/challenge/` – application, controllers, services, dto, util, config
 - `src/test/java/` – unit and integration tests
-
-## License
-
-MIT.

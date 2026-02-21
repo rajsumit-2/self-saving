@@ -5,8 +5,8 @@ Production-grade APIs for automated retirement savings: expense parsing, transac
 ## Requirements
 
 - Java 17+
-- Maven 3.6+
-- Docker (optional)
+- Maven 3.6+ (or use Maven Wrapper: `./mvnw`)
+- Docker (optional - for local builds only; CI/CD uses GitHub Actions)
 
 ## Build and run
 
@@ -41,10 +41,38 @@ Transaction objects accept either `date` or `timestamp` for the datetime field. 
 
 Per challenge: app runs on port **5477** inside the container; map with `-p 5477:5477`. Image name convention: `blk-hacking-ind-{name-lastname}`.
 
+### Local Docker Build (Optional)
+
 ```bash
-docker build -t blk-hacking-ind-<name-lastname> .
-docker run -d -p 5477:5477 blk-hacking-ind-<name-lastname>
+docker build -t rajsumit2/blackrock-challenge:latest .
+docker run -p 5477:5477 rajsumit2/blackrock-challenge:latest
 ```
+
+### GitHub Actions CI/CD
+
+Docker images are automatically built and pushed to GitHub Container Registry (GHCR) using GitHub Actions.
+
+**Workflow triggers:**
+- Push to `main`/`master` branch → Builds and pushes image
+- Pull requests → Builds image (no push) for testing
+- Manual trigger → Available from Actions tab
+
+**Image location:**
+- Registry: `ghcr.io`
+- Image: `ghcr.io/rajsumit-2/self-saving:latest`
+- Tags: Automatically tagged with branch name, commit SHA, and `latest` for main branch
+
+**Pull and run the built image:**
+```bash
+docker pull ghcr.io/rajsumit-2/self-saving:latest
+docker run -p 5477:5477 ghcr.io/rajsumit-2/self-saving:latest
+```
+
+**Workflow features:**
+- ✅ Multi-platform support
+- ✅ Docker layer caching for faster builds
+- ✅ Automatic tagging
+- ✅ No manual Docker Desktop required
 
 ## Tests
 
@@ -60,3 +88,4 @@ Integration tests hit the colon-style paths (`transactions:parse`, `transactions
 
 - `src/main/java/com/blackrock/challenge/` – application, controllers, services, dto, util, config
 - `src/test/java/` – unit and integration tests
+- `.github/workflows/` – GitHub Actions CI/CD workflows

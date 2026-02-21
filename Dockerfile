@@ -1,4 +1,4 @@
-# Build: docker build -t blk-hacking-ind-{name-lastname} .
+# Build: docker build -t rajsumit2/blackrock-challenge:latest .
 # Build stage
 # OS: Alpine Linux (eclipse-temurin base). Chosen for minimal image size and security surface; Linux required per challenge.
 FROM maven:3.9.5-eclipse-temurin-17 AS build
